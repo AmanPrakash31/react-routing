@@ -7,18 +7,15 @@ import { Toast } from 'primereact/toast';
 
 function ProtectedRoutesPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [showLoginDialog, setShowLoginDialog] = useState(false);  // To show the login dialog
-    const [username, setUsername] = useState('');  // To store the entered username
-    const [password, setPassword] = useState('');  // To store the entered password
+    const [showLoginDialog, setShowLoginDialog] = useState(false); 
+    const [username, setUsername] = useState('');  
+    const [password, setPassword] = useState(''); 
 
-
-    const toast = React.useRef(null); // Reference for Toast component
-
-    // Handler to simulate logging in
+    const toast = React.useRef(null); 
     const handleLogin = () => {
-        if (password === 'admin') {  // Check if the password is "admin"
-            setIsAuthenticated(true); // Simulate successful login
-            setShowLoginDialog(false); // Close the login dialog
+        if (password === 'admin') { 
+            setIsAuthenticated(true);
+            setShowLoginDialog(false); 
             toast.current.show({ severity: 'success', summary: 'Login Successful', detail: `Welcome ${username}!`, life: 3000 });
         } else {
             toast.current.show({ severity: 'error', summary: 'Login Failed', detail: 'Incorrect password. Please try again.', life: 3000 });
@@ -32,13 +29,11 @@ function ProtectedRoutesPage() {
 
     return (
         <div className="flex justify-content-center p-flex-column" style={{ minHeight: '90vh', backgroundColor: '#f5f5f5' }}>
-            {/* Toast notification */}
             <Toast ref={toast} />
 
-            {/* Conditional rendering based on authentication status */}
             {isAuthenticated ? (
                 <Card title="Protected Content" className="mb-4 mt-4" style={{ width: '40%', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-                    <h3>Welcome to the Protected Route, {username}!</h3> {/* Displaying the username */}
+                    <h3>Welcome to the Protected Route, {username}!</h3> 
                     <p>Only authenticated users can see this content.</p>
                     <p>This is an example of a protected route where access is restricted until the user logs in.</p>
 
@@ -76,12 +71,10 @@ function ProtectedRoutesPage() {
                         <li><strong>Session Management:</strong> React apps often use cookies, localStorage, or sessionStorage to persist authentication information.</li>
                     </ul>
 
-                    {/* Button to show login dialog */}
                     <Button label="Login" icon="pi pi-sign-in" onClick={() => setShowLoginDialog(true)} className="mt-3" />
                 </Card>
             )}
 
-            {/* Login Dialog */}
             <Dialog header="Login" visible={showLoginDialog} style={{ width: '30rem' }} onHide={() => {
                 setShowLoginDialog(false);
                 setPassword('');
