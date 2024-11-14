@@ -1,126 +1,108 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import MemoryRouterExample from './resource/MemoryRouter.gif';
+
 function MemoryRouterPage() {
   const navigate = useNavigate();
-// const location = useLocation();
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location]
+  )
   return (
-    <div className=" flex justify-content-center p-flex-column" style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+    <div className="flex justify-content-center p-flex-column" style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
       <Card title="Understanding MemoryRouter" className="mb-4 mt-4" style={{ width: '60rem', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
         <p>
-          The <strong>MemoryRouter</strong> is a router in React that keeps track of history in memory, instead of using the browser's address bar. It does not modify the URL in the browser, making it suitable for use cases where you do not want or need to show the URL to the user, such as in testing environments or non-browser-based environments (e.g., React Native).
+          The <strong>MemoryRouter</strong> keeps the URL changes in memory rather than in the browser’s address bar. It manages the URL history in memory, so the user cannot use the browser’s back or forward buttons to navigate.
+          This makes <strong>MemoryRouter</strong> especially useful for testing environments and non-browser contexts like React Native.
         </p>
 
         <h3>How MemoryRouter Works</h3>
         <p>
-          Unlike <strong>BrowserRouter</strong> or <strong>HashRouter</strong>, <strong>MemoryRouter</strong> does not rely on the browser's URL to manage navigation. Instead, it keeps track of the history in memory. This means that it won’t modify the actual URL displayed in the address bar.
+          Unlike <strong>BrowserRouter</strong> or <strong>HashRouter</strong>, <strong>MemoryRouter</strong> does not modify the browser's URL. Instead, it maintains navigation history internally, without showing the route in the browser's address bar.
         </p>
-        <p>
-          It is most commonly used for scenarios such as testing or when building apps that are not running in a traditional web browser (e.g., React Native or Electron). When you navigate to different routes, the <code>MemoryRouter</code> updates its internal history state but does not affect the browser’s URL.
-        </p>
+
+        <h4>Syntax</h4>
+        <pre className="mb-4" style={{ backgroundColor: '#f7f7f7', padding: '10px', borderRadius: '5px' }}>
+          {`
+import { MemoryRouter as Router } from 'react-router-dom';
+          `}
+        </pre>
 
         <h4>Example Usage</h4>
-        <p>
-          Here’s how you can use the <strong>MemoryRouter</strong> in your application:
-        </p>
+        <p>This example demonstrates the use of <strong>MemoryRouter</strong> to manage in-memory navigation:</p>
         <pre className="mb-4" style={{ backgroundColor: '#f7f7f7', padding: '10px', borderRadius: '5px' }}>
-{`
-import React from 'react';
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+          {`
+// Filename - App.js
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </Router>
-  );
-}
+import React, { Component } from "react";
+import {
+  MemoryRouter as Router,
+  Route,
+  Link,
+  Switch,
+} from "react-router-dom";
+import Home from "./component/home";
+import About from "./component/about";
+import Contact from "./component/contact";
+import "./App.css";
 
-function Home() {
-  return <h2>Welcome to the Home Page</h2>;
-}
-
-function About() {
-  return <h2>About Us</h2>;
-}
-
-function Contact() {
-  return <h2>Contact Us</h2>;
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <ul className="App-header">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About Us</Link></li>
+            <li><Link to="/contact">Contact Us</Link></li>
+          </ul>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/contact" component={Contact} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
 `}
         </pre>
-        <p>
-          In this example:
-          <ul>
-            <li>We are using <code>MemoryRouter</code> instead of <code>BrowserRouter</code> to manage the navigation.</li>
-            <li>It’s important to note that the URL will not change when navigating between routes.</li>
-            <li>The internal history is managed in memory, meaning that the state persists only during the lifetime of the app.</li>
-          </ul>
-        </p>
+
+        <h4>GIF Example</h4>
+        <p>This GIF illustrates how routing works with <strong>MemoryRouter</strong>:</p>
+        <img src={MemoryRouterExample} alt="MemoryRouter example GIF" style={{ width: '100%', borderRadius: '8px', marginBottom: '20px' }} />
 
         <h4>Benefits of Using MemoryRouter</h4>
         <ul>
-          <li><strong>No URL Modification:</strong> The URL in the address bar will not change when navigating between routes.</li>
-          <li><strong>Suitable for Testing:</strong> It is ideal for unit testing or when you do not need real URL changes.</li>
-          <li><strong>Non-Browser Environments:</strong> Perfect for environments like React Native, Electron, or testing frameworks where URL manipulation isn’t possible or necessary.</li>
+          <li><strong>No URL Modification:</strong> The URL in the address bar remains static, even when navigating between routes.</li>
+          <li><strong>Ideal for Testing:</strong> It is perfect for unit tests where you want to simulate routing without actual URL changes.</li>
+          <li><strong>Non-Browser Environments:</strong> Works well with React Native, Electron, or other environments where URL manipulation isn’t needed.</li>
         </ul>
 
         <h4>Limitations of MemoryRouter</h4>
         <p>
-          The main limitation of <strong>MemoryRouter</strong> is that it doesn’t allow for direct interaction with the browser's URL bar. This means that:
+          The main limitation of <strong>MemoryRouter</strong> is that it doesn’t interact with the browser's URL bar. This means that:
         </p>
         <ul>
-          <li><strong>Cannot be used for production web apps</strong> where you want users to be able to bookmark, share, or reload specific pages.</li>
-          <li>Since the URL is not updated, users cannot use browser features like the back and forward buttons to navigate between routes.</li>
+          <li><strong>Not Suitable for Production:</strong> Not ideal for web applications where users need to bookmark or share URLs.</li>
+          <li>Browser back/forward buttons won’t work as expected since the URL remains unchanged.</li>
         </ul>
 
-        <h4>Use Cases for MemoryRouter</h4>
-        <p>
-          <strong>MemoryRouter</strong> is not typically used in production web applications but is great for certain use cases:
-        </p>
+        <h4>When to Use MemoryRouter</h4>
         <ul>
-          <li><strong>Testing:</strong> It is commonly used in unit tests or integration tests where URL changes are not needed and you only care about routing logic.</li>
-          <li><strong>Non-Web Platforms:</strong> Ideal for platforms like React Native, Electron, or other environments that don’t need to manipulate the browser's address bar.</li>
-          <li><strong>Single-Page Applications (SPAs) without URL state:</strong> When building apps where navigation happens in memory and you don’t need to expose the current state in the URL.</li>
+          <li><strong>Testing:</strong> It is ideal for testing environments where actual URL changes are unnecessary.</li>
+          <li><strong>Non-Web Platforms:</strong> Best for non-browser environments like React Native, where URL changes are not needed.</li>
+          <li><strong>Single-Page Applications without URL dependency:</strong> Useful for SPAs where you don’t need to expose the route in the browser URL.</li>
         </ul>
 
-        <h4>MemoryRouter with Navigation</h4>
-        <p>
-          Even though <strong>MemoryRouter</strong> doesn't change the URL, you can still use navigation features such as <code>Link</code> or <code>Navigate</code> for route transitions.
-        </p>
-        <pre className="mb-4" style={{ backgroundColor: '#f7f7f7', padding: '10px', borderRadius: '5px' }}>
-{`
-import { Link } from 'react-router-dom';
-
-function Navbar() {
-  return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/contact">Contact</Link>
-    </nav>
-  );
-}
-`}
-        </pre>
-
-        <h4>Important Notes</h4>
-        <p>
-          - Use <strong>MemoryRouter</strong> in scenarios where URL state and browser features are not necessary, such as in tests or non-browser environments.
-          <br />
-          - If you're building a traditional web app, you will likely need to use <strong>BrowserRouter</strong> or <strong>HashRouter</strong> instead.
-          <br />
-          - Make sure to test any router-based logic thoroughly, especially if you plan to move the app to a production environment later.
-        </p>
-
-        <Button label="Next: Learn about HashRouter" icon="pi pi-arrow-right" onClick={() => navigate('/hash-router') } />
+        <Button label="Next: Learn about HashRouter" icon="pi pi-arrow-right" onClick={() => navigate('/hash-router')} />
       </Card>
     </div>
   );

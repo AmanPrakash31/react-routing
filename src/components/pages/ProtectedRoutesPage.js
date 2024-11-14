@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
-
+import { useLocation } from 'react-router-dom';
 function ProtectedRoutesPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [showLoginDialog, setShowLoginDialog] = useState(false); 
-    const [username, setUsername] = useState('');  
-    const [password, setPassword] = useState(''); 
+    const [showLoginDialog, setShowLoginDialog] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const toast = React.useRef(null); 
+    const toast = React.useRef(null);
     const handleLogin = () => {
-        if (password === 'admin') { 
+        if (password === 'admin') {
             setIsAuthenticated(true);
-            setShowLoginDialog(false); 
+            setShowLoginDialog(false);
             toast.current.show({ severity: 'success', summary: 'Login Successful', detail: `Welcome ${username}!`, life: 3000 });
         } else {
             toast.current.show({ severity: 'error', summary: 'Login Failed', detail: 'Incorrect password. Please try again.', life: 3000 });
@@ -25,14 +25,19 @@ function ProtectedRoutesPage() {
     const handleLogout = () => {
         setIsAuthenticated(false);
     };
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [location]
 
+    )
     return (
         <div className="flex justify-content-center p-flex-column" style={{ minHeight: '90vh', backgroundColor: '#f5f5f5' }}>
             <Toast ref={toast} />
 
             {isAuthenticated ? (
                 <Card title="Protected Content" className="mb-4 mt-4" style={{ width: '40%', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-                    <h3>Welcome to the Protected Route, {username}!</h3> 
+                    <h3>Welcome to the Protected Route, {username}!</h3>
                     <p>Only authenticated users can see this content.</p>
                     <p>This is an example of a protected route where access is restricted until the user logs in.</p>
 

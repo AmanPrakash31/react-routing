@@ -11,7 +11,6 @@ function Navbar() {
         { label: 'Browser Router', icon: 'pi pi-globe', command: () => navigate('/browser-router'), path: '/browser-router' },
         { label: 'Memory Router', icon: 'pi pi-bookmark', command: () => navigate('/memory-router'), path: '/memory-router' },
         { label: 'Hash Router', icon: 'pi pi-hashtag', command: () => navigate('/hash-router'), path: '/hash-router' },
-        { label: 'Nested Routes', icon: 'pi pi-sitemap', command: () => navigate('/nested-routes'), path: '/nested-routes' },
         { label: 'Dynamic Routes', icon: 'pi pi-cog', command: () => navigate('/dynamic-routes'), path: '/dynamic-routes' },
         { label: 'Protected Routes', icon: 'pi pi-lock', command: () => navigate('/protected-routes'), path: '/protected-routes' },
         { label: 'Redirects', icon: 'pi pi-arrow-right', command: () => navigate('/redirects'), path: '/redirects' },
