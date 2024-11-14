@@ -1,8 +1,10 @@
 import React from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-
+import { useNavigate } from 'react-router-dom';
 function MemoryRouterPage() {
+  const navigate = useNavigate();
+// const location = useLocation();
   return (
     <div className=" flex justify-content-center p-flex-column" style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
       <Card title="Understanding MemoryRouter" className="mb-4 mt-4" style={{ width: '60rem', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
@@ -118,7 +120,7 @@ function Navbar() {
           - Make sure to test any router-based logic thoroughly, especially if you plan to move the app to a production environment later.
         </p>
 
-        <Button label="Next: Learn about HashRouter" icon="pi pi-arrow-right" onClick={() => window.location.href = '/hash-router'} />
+        <Button label="Next: Learn about HashRouter" icon="pi pi-arrow-right" onClick={() => navigate('/hash-router') } />
       </Card>
     </div>
   );

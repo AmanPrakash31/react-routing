@@ -22,7 +22,6 @@ function ProtectedRoutesPage() {
         }
     };
 
-    // Handler to log out
     const handleLogout = () => {
         setIsAuthenticated(false);
     };

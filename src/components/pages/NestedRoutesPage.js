@@ -1,9 +1,11 @@
 import React from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function NestedRoutesPage() {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-content-center p-flex-column" style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
       <Card title="Nested Routes Example" className="mb-4 mt-4" style={{ width: '60rem', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
@@ -110,7 +112,7 @@ function DashboardSettings() {
           <li>Make sure to handle navigation between nested routes appropriately using <strong>Link</strong> or <strong>Navigate</strong> components to allow seamless transitions.</li>
         </ul>
 
-        <Button label="Next: Dynamic Routes" icon="pi pi-arrow-right" onClick={() => window.location.href = '/dynamic-routes'} />
+        <Button label="Next: Dynamic Routes" icon="pi pi-arrow-right" onClick={() => navigate('/dynamic-routes')} />
       </Card>
     </div>
   );

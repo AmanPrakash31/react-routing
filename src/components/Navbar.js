@@ -20,10 +20,13 @@ function Navbar() {
     const menuItems = items.map(item => ({
         ...item,
         label: (
-            <span style={{ color: location.pathname === item.path ? '#4f46e5' : 'inherit' }}>
+            <span style={{
+                color: location.pathname === item.path ? 'rgb(11, 0, 167)' : 'inherit',
+                fontWeight: location.pathname === item.path ? 'bold' : 'normal'
+            }}>
                 {item.label}
             </span>
-        )
+        ),
     }));
 
     return (
